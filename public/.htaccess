@@ -1,0 +1,10 @@
+
+RewriteEngine on
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteOptions inherit
+
+Redirect 301 "/Standard/FTStd0.9.pdf" "/standard/FTStd0.9.pdf"
+Redirect 301 "/Standard/FTStd0.9.odt" "/standard/FTStd0.9.docx"
+Redirect 301 "/Standard/PreviousReleases.html" "/standard/previous"

@@ -18,18 +18,43 @@ const { settings, menuItemDefinitions } = Astro.props;
 </menu>
 
 <style define:vars={{
+    mainMenuFontFamily: settings.mainMenuFontFamily,
+    wideMainMenuFontSize: settings.wideMainMenuFontSize,
+    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
     mainMenuBackgroundColor: settings.mainMenuBackgroundColor,
     mainMenuMargin: settings.mainMenuMargin,
     mainMenuPadding: settings.mainMenuPadding,
     wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
     narrowMainMenuFlexGap: settings.narrowMainMenuFlexGap,
     narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
+    narrowMenuItemPadding: settings.narrowMenuItemPadding,
 }}>
     .main-menu {
         display: flex;
+        font-family: var(--mainMenuFontFamily, inherit);
+        font-size: var(--wideMainMenuFontSize, 1.2em);
         background-color: var(--mainMenuBackgroundColor, inherit);
         margin: : var(--mainMenuMargin, 0);
         padding: : var(--mainMenuPadding, 0);
-        gap: var(--wideMainMenuFlexGap, .8rem);
+        gap: var(--wideMainMenuFlexGap, .8em);
+
+        @media screen and (width < 32rem) {
+            position: absolute;
+            top: 100%;
+            display: none;
+            flex-direction: column;
+            font-size: var(--narrowMainMenuFontSize, 1.2em);
+            gap: var(--narrowMainMenuFlexGap, 0.18rem);
+            box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
+
+            &.displayed {
+                display: flex;
+                width: 100%;
+            }
+
+            > .leaf-menu-item {
+                padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+            }
+        }
     }
 </style>

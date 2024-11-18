@@ -1,7 +1,7 @@
 export interface MenuItemDefinition {
     text: string;
-    id?: string;
     url?: string;
-    clickHandler?: () => (definition: MenuItemDefinition) => void;
+    title?: string;
+    data?: string;
     children?: readonly MenuItemDefinition[];
 }

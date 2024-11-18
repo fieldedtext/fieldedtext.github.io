@@ -28,42 +28,42 @@ const { settings } = Astro.props;
         display: none;
         pointer-events: none;
         position: relative;
-        width: var(--hamburgerWidth, 1.8rem);
-        height: var(--hamburgerHeight, 0.8rem);
+        width: var(--hamburgerWidth, 1.8em);
+        height: var(--hamburgerHeight, 0.8em);
         cursor: var(--hamburgerPointer, pointer);
         z-index:100;
         overflow: hidden;
     }
 
     .hamburger::before {
-        top: var(--hamburgerTopOffset, 0.1rem);
+        top: var(--hamburgerTopOffset, 0.1em);
         right:0;
         content: '';
         position: absolute;
-        width: var(--hamburgerWidth, 1.8rem);
-        height: var(--hamburgerTopHeight, 0.2rem);
+        width: var(--hamburgerWidth, 1.8em);
+        height: var(--hamburgerTopHeight, 0.2em);
         background-color: var(--hamburgerTopBackgroundColor, #3a62e5);
         transition: var(--hamburgerTopTransition, all 0.3s ease-in-out);
     }
 
     .hamburger::after {
-        bottom: var(--hamburgerBottomOffset, 0.1rem);
+        bottom: var(--hamburgerBottomOffset, 0.1em);
         right:0;
         content: '';
         position: absolute;
-        width: var(--hamburgerBottomWidth, 1.4rem);
-        height: var(--hamburgerBottomHeight, 0.2rem);
+        width: var(--hamburgerBottomWidth, 1.4em);
+        height: var(--hamburgerBottomHeight, 0.2em);
         background-color: var(--hamburgerBottomBackgroundColor, #3a62e5);
         transition: var(--hamburgerBottomTransition, transform 0.3s ease-in-out);
     }
 
     /* Rotate the before and after lines to create the close hamburger effect */
     .hamburger.active::before {
-        width: var(--hamburgerBottomWidth, 1.4rem);
-        transform: rotate(-45deg) translate(-0.21rem, 0.21rem);
+        width: var(--hamburgerBottomWidth, 1.4em);
+        transform: rotate(-45deg) translate(-0.21em, 0.21em);
     }
 
     .hamburger.active::after {
-        transform: rotate(45deg) translate(-0.21rem, -0.21rem);
+        transform: rotate(45deg) translate(-0.21em, -0.21em);
     }
 </style>

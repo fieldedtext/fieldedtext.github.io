@@ -42,6 +42,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     navBarPadding: settings.navBarPadding,
     navBarWideLeftSlotFlex: settings.navBarWideLeftSlotFlex,
     navBarWideRightSlotFlex: settings.navBarWideRightSlotFlex,
+    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
 }}>
     .navbar {
         width: 100%;
@@ -74,10 +75,7 @@ const { settings, menuItemDefinitions } = Astro.props;
         }
 
         /* Make sure lines up with @media in MainMenu and BranchMenuItem */
-    }
-
-    @media screen and (width < 32rem) {
-        .navbar {
+        @media screen and (width < 32rem) {
             > .narrow-heading-slot {
                 display: flex;
                 align-items: center;
@@ -99,24 +97,10 @@ const { settings, menuItemDefinitions } = Astro.props;
             > .hamburger {
                 display: block;
                 pointer-events: all;
-            }
-
-            /* moved here as currently not possible to set @media rules parameters so less places to update */
-            > .main-menu {
-                position: absolute;
-                top: 100%;
-                display: none;
-                flex-direction: column;
-                gap: var(--narrowMainMenuFlexGap, 0.18rem);
-                box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
 
                 &.active {
-                    display: flex;
-                    width: 100%;
-                }
-
-                > .leaf-menu-item {
-                    padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
+                    font-size: var(--narrowMainMenuFontSize, 1.2em);
+                    padding:
                 }
             }
         }
@@ -124,42 +108,5 @@ const { settings, menuItemDefinitions } = Astro.props;
 </style>
 
 <script>
-    //import '../scripts/menu-setup';
-
-    const hamburgerIcon = document.querySelector('.hamburger');
-    if (hamburgerIcon === null) {
-        throw new Error('Hamburger Icon not found');
-    } else {
-        const mainMenuComponent = document.querySelector('.main-menu');
-        if (mainMenuComponent === null) {
-            throw new Error('MainMenu Component not found');
-        } else {
-            const menuComboElementList = mainMenuComponent.querySelectorAll('.branch-menu-item');
-
-            const menuComboDroppedClassName = 'dropped';
-            menuComboElementList.forEach((element) => {
-                const upDownMenuItemClickElement = element.querySelector('.up-down-menu-item-click');
-                if (upDownMenuItemClickElement === null) {
-                    throw new Error(`UpDownMenuItemClick element for "${element.innerHTML}" not found`);
-                } else {
-                    upDownMenuItemClickElement.addEventListener('click', () => {
-                        element.classList.toggle(menuComboDroppedClassName);
-                    });
-                }
-            });
-
-            hamburgerIcon.addEventListener('click', () => {
-                hamburgerIcon.classList.toggle('active');
-                const mainMenuComponentActiveClassName = 'active';
-                if (mainMenuComponent.classList.contains(mainMenuComponentActiveClassName)) {
-                    menuComboElementList.forEach((element) => {
-                        element.classList.remove(menuComboDroppedClassName);
-                    });
-                    mainMenuComponent.classList.remove(mainMenuComponentActiveClassName);
-                } else {
-                    mainMenuComponent.classList.add(mainMenuComponentActiveClassName);
-                }
-            });
-        }
-    }
+    import '../scripts/menu-click-processor';
 </script>
