@@ -1,0 +1,111 @@
+---
+layout: ../../layouts/MarkdownPageLayout.astro
+title: 'Introduction'
+dataCodeStyle: 'margin-left: 2em; background-color: black; background-clip: content-box'
+metaCodeStyle: 'margin-left: 2em; background-color: gray'
+---
+
+## What is the Fielded Text standard all about?
+
+The ultimate aim of the Fielded Text Standard is to make it a lot easier to use text files to store or distribute tables of values.
+
+Currently files such as Comma Separated Value (CSV) text files are often used to transfer this type of data.  Their advantage is that they are easy to understand, can be viewed with a plain text editor, and programmers can access the data without any special run-times.  Their disadvantage is that everyone uses different structures and formats for storing their data in text files.  Hence programmers invariably have to write a new parser whenever they want to extract data from a text file from a new supplier.
+
+Fielded Text takes a new approach when working with text files containing tables of values!
+
+Fielded Text allows you to associate a Meta File with a text file.  This Meta file is a small XML file which describes the structure and format of data within the text file.  More importantly, it allows you to access the data in the file in the same way you access records in a database table.  It combines the simplicity of text files with the convenience of database access.
+
+A full description of how the Fielded Text standard enables this can be found in the Standard page on this website.  However if you are looking for a concise description, read on.
+
+## Capabilities
+
+The Fielded Text standard aims to be compatible with all text files today that contain tables of values.  In support of this aim, it has a set of capabilities which should cover nearly all structures and formats used in existing text files.  These capabilities are summarised [here](./capabilities).
+
+## Creating Meta Files
+
+There are several ways of creating a Meta file for a FieldedText file:
+
+    Use a text editor.  Meta files are XML files so, provided you know the tags and schema, you can use any text editor (or XML file editor) to create it.
+    Use a Fielded Text Editor.  This is the easy way.  A Fielded Text Editor is a specialised text editor for working with Fielded Text files.  With a Fielded Text Editor you can load a sample text file and then visually set the Meta properties for it.  The editor will interactively show you any parsing errors arising from incorrect properties.  Once the properties are correctly set, you can export them into a Meta File.
+
+    A list of Fielded Text editors is here - including at least one free one.
+    Programatically.  Fielded Text software components can also be used to generate Meta files programatically.  This method will be used in specialised Fielded Text applications (for example, Fielded Text Editors).
+
+Meta files typically have a file extension of "ftm".
+
+## Declared and Undeclared Fielded Text Files
+
+Fielded Text files can be either declared or not declared (undeclared).
+
+A declared Fielded Text file has 2 special lines at the start of the file.  These 2 lines are called the file declaration.  The declaration contains a marker which identifies the file as a Fielded Text file and it specifies what version of the Fielded Text Standard the file conforms to.
+
+In addition, the declaration can also specify the Meta file which this text file is associated with.  It can specify the Meta with:
+
+    A URL pointing to the Meta file.
+    The file path of the Meta file.
+    A flag indicating that the Meta is embedded in the text file.
+
+Declared Fielded Text files remove the need for end users to match a text file with the Meta.  This makes them more reliable as users are less likely to parse or interpret the data incorrectly.  For example, organisations publishing data, can place a copy of the Meta on their website and have the downloadable data text files reference it.  End users can then simply download the text file and the parser will automatically know how to obtain the correct Meta.
+
+Nearly all existing text files containing tables of values will be 'Undeclared' Fielded Text files.  They can be handled exactly the same way as Declared Fielded Text files however the text file will need to be explicitly associated with its Meta.
+
+## Basic Example
+
+Below is a basic CSV file. It has 2 heading lines and 4 data lines. The lines contain 7 fields of various types.
+
+<pre style={frontmatter.dataCodeStyle}>
+<code>
+"Pet Name", "Age", "Color", "Date Received", "Price", "Needs Walking", "Type"
+, (Years), , , (Dollars), ,
+"Rover", 4.5, Brown, 12 Feb 2004, 80, True, "Dog"
+"Charlie", , Gold, 5 Apr 2007, 12.3, False, "Fish"
+"Molly", 2, Black, 12 Dec 2006, 25, False, "Cat"
+"Gilly", , White, 10 Apr 2007, 10, False, "Guinea Pig"
+</code>
+</pre>
+
+The following Fielded Text Meta file specifies the structure and layout (schema) of the above text file.
+
+<pre style={frontmatter.metaCodeStyle}>
+<code>
+&lt;?xml version="1.0" encoding="utf-16"?>
+&lt;FieldedText HeadingLineCount="2">
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field Name="PetName" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field DataType="Float" Name="Age" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field Name="Color" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field DataType="DateTime" Name="DateReceived" Format="d MMM yyyy" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field DataType="Decimal" Name="Price" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field DataType="Boolean" Name="NeedsWalking" />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Field Name="Type" />
+&lt;/FieldedText>
+</code>
+</pre>
+
+Following is a Declared Fielded Text file which contains the above CSV text together with the its meta embedded as comments. The ~ character specifies a comment line.
+
+<pre style={frontmatter.dataCodeStyle}>
+<code>
+\~|!Fielded Text^| Version="1.0"
+~ MetaEmbedded="True"
+~ &lt;?xml version="1.0" encoding="utf-16"?>
+~ &lt;FieldedText LineCommentChar="~" HeadingLineCount="2">
+~ &lt;Field Name="PetName" />
+~ &lt;Field DataType="Float" Name="Age" />
+~ &lt;Field Name="Color" />
+~ &lt;Field DataType="DateTime" Name="DateReceived" Format="d MMM yyyy" />
+~ &lt;Field DataType="Decimal" Name="Price" />
+~ &lt;Field DataType="Boolean" Name="NeedsWalking" />
+~ &lt;Field Name="Type" />
+~ &lt;/FieldedText>
+"Pet Name", "Age", "Color", "Date Received", "Price", "Needs Walking", "Type"
+, (Years), , , (Dollars), ,
+"Rover", 4.5, Brown, 12 Feb 2004, 80, True, "Dog"
+"Charlie", , Gold, 5 Apr 2007, 12.3, False, "Fish"
+"Molly", 2, Black, 12 Dec 2006, 25, False, "Cat"
+"Gilly", , White, 10 Apr 2007, 10, False, "Guinea Pig"
+</code>
+</pre>
+
+## Fielded Text file Structure
+
+[File Structure](./file-structure)

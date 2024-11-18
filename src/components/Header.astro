@@ -1,0 +1,39 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { MenuItemDefinition } from '../utils/menu-item-definition';
+import { LightBlueTones } from '../utils/nav-bar-settings';
+import NavBar from './NavBar.astro';
+
+const menuItemDefinitions: MenuItemDefinition[] = [
+    { text: 'Home', url: '/' },
+    {
+        text: 'Introduction',
+        url: '/introduction/',
+        children: [
+            { text: 'Capabilities', url: '/introduction/capabilities/' },
+            { text: 'Structure', url: '/introduction/file-structure/' },
+            { text: 'FAQ', url: '/introduction/faq/' },
+        ],
+    },
+    { text: 'Software', url: '/software/' },
+    { text: 'Standard', url: '/standard/' },
+    { text: 'News', url: '/news/' },
+];
+---
+
+<header>
+    <NavBar settings={LightBlueTones.settings}, menuItemDefinitions={menuItemDefinitions}>
+        <Icon name="noun-comma-separated-value-1512118" slot="narrow-left"/>
+        <Icon name="noun-comma-separated-value-1512118" slot="wide-left" />
+        <Icon name="noun-comma-separated-value-1512118" slot="wide-right" />
+        <slot name="narrow-heading" slot="narrow-heading" />
+    </NavBar>
+</header>
+
+<style>
+    [data-icon="noun-comma-separated-value-1512118"] {
+        color: gray;
+        /* OR */
+        fill: gray;
+    }
+</style>

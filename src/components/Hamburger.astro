@@ -1,0 +1,69 @@
+---
+import type { HamburgerSettings } from '../utils/nav-bar-settings';
+
+export interface Props {
+    settings: HamburgerSettings;
+};
+
+const { settings } = Astro.props;
+---
+
+<div class="hamburger"></div>
+
+<style define:vars={{
+    hamburgerWidth: settings.hamburgerWidth,
+    hamburgerHeight: settings.hamburgerHeight,
+    hamburgerPointer: settings.hamburgerPointer,
+    hamburgerTopOffset: settings.hamburgerTopOffset,
+    hamburgerTopHeight: settings.hamburgerTopHeight,
+    hamburgerTopBackgroundColor: settings.hamburgerTopBackgroundColor,
+    hamburgerTopTransition: settings.hamburgerTopTransition,
+    hamburgerBottomOffset: settings.hamburgerBottomOffset,
+    hamburgerBottomWidth: settings.hamburgerBottomWidth,
+    hamburgerBottomHeight: settings.hamburgerBottomHeight,
+    hamburgerBottomBackgroundColor: settings.hamburgerBottomBackgroundColor,
+    hamburgerBottomTransition: settings.hamburgerBottomTransition,
+}}>
+    .hamburger {
+        display: none;
+        pointer-events: none;
+        position: relative;
+        width: var(--hamburgerWidth, 1.8rem);
+        height: var(--hamburgerHeight, 0.8rem);
+        cursor: var(--hamburgerPointer, pointer);
+        z-index:100;
+        overflow: hidden;
+    }
+
+    .hamburger::before {
+        top: var(--hamburgerTopOffset, 0.1rem);
+        right:0;
+        content: '';
+        position: absolute;
+        width: var(--hamburgerWidth, 1.8rem);
+        height: var(--hamburgerTopHeight, 0.2rem);
+        background-color: var(--hamburgerTopBackgroundColor, #3a62e5);
+        transition: var(--hamburgerTopTransition, all 0.3s ease-in-out);
+    }
+
+    .hamburger::after {
+        bottom: var(--hamburgerBottomOffset, 0.1rem);
+        right:0;
+        content: '';
+        position: absolute;
+        width: var(--hamburgerBottomWidth, 1.4rem);
+        height: var(--hamburgerBottomHeight, 0.2rem);
+        background-color: var(--hamburgerBottomBackgroundColor, #3a62e5);
+        transition: var(--hamburgerBottomTransition, transform 0.3s ease-in-out);
+    }
+
+    /* Rotate the before and after lines to create the close hamburger effect */
+    .hamburger.active::before {
+        width: var(--hamburgerBottomWidth, 1.4rem);
+        transform: rotate(-45deg) translate(-0.21rem, 0.21rem);
+    }
+
+    .hamburger.active::after {
+        transform: rotate(45deg) translate(-0.21rem, -0.21rem);
+    }
+</style>

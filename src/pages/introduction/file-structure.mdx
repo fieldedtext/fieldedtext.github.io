@@ -1,0 +1,135 @@
+---
+layout: ../../layouts/MarkdownPageLayout.astro
+title: 'Fielded Text File Structure'
+---
+A Fielded Text file consists of 2 main parts: Header and Body.  The Body contains the lines which hold the data \(the records\).  The Headers consist of all the lines prior to the Body \(including heading lines\).
+
+At a more detail level, the header part of the file can be split into the following sections:
+
+* **Declaration**.  The first 2 lines of a Declared Fielded Text file.  The first line of the Declaration begins with the comment character \(can be any character\) followed by the marker: "|!Fielded Text^|" \(or "|&gt;Fielded Text&lt;|" for backwards compatibility\).  The presence of this marker denotes that this file is a Declared Fielded Text file.
+* **Comments**.  This section can be present after the declaration \(if it is present\) or at the start of the header part.  It consists of a block of comment lines.  A comment line is a line beginning with the "Line Comment" character.  It is ignored when parsing the file.  The line comment character is either the first character in a Declared Fielded Text file or it is specified by the Meta.
+* **Embedded Meta**.  If the Delaration section specifies that the Meta is embedded in the file, then it will be included as a block of comment lines in the header. The Meta itself is a XML data stream.  In order to embed it, each line in the data stream is prefixed with the line comment character and some \(optional\) white space characters. The data stream can then be embedded in the header as a block of comment lines.
+* **Comments**.  After the Embedded Meta section, it is possible to have another block of comment lines.
+* **Headings**.  This section will only occur if the Meta specifies that a text file contains heading lines.  If heading lines are included, then the first line which is not part of the declaration and does not begin with a line comment character, will be the first heading line.  The number of heading lines is specified in the Meta.  Note that comment lines cannot be included in the headings section \(ie lines beginning with the line comment character will not be treated as comment lines\).  Also note that blank lines are not ignored in this section.
+
+The body part of the text file begins either:
+
+* after the last heading line; or
+* if there are no heading lines, then after the last comment line in the header; or
+* if there are no comment lines as well, then after the declaration section; or
+* if there is not declaration section as well, then at the beginning of the file.
+
+The record part can contain record lines and comment line \(and possibly ignored blank lines\).  A record line contains the actual data - ie. a row of values.  Each record line consists of a sequence of field values.  The format of these field values is specified by the Meta.  The Meta also specifies the structure of the record lines, including how field values are separated.
+
+It is possible for a record to span multiple lines in the text file.  This will occur when a field value contains an "End of Line" character\(s\).  If a record does span multiple lines, then any line in that record will not be treated as comment line or an ignored blank line.  Accordingly, it is possible for lines in the body part to begin with a line comment character but not be treated as a comment line.
+
+## Meta file Structure
+
+The Meta contains the following groups of information:
+
+**Main Section** which specifies properties applying to the whole text file.  In the above example Meta file, the attributes in the &gt;FieldedText> element apply to the whole text file and make up the main section.  The Main Section can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| Culture | Specifies which regional conventions should be used. \(RFC 4646\) | Invariant |
+| EndOfLineType | Method used to detect line ends in text file | Auto |
+| EndOfLineChar | Character which denotes line end when EndOfLineType is "Char" | ; |
+| EndOfLineAutoWriteType | Method used to write line ends when EndOfLineType = "Auto" | Local |
+| LastLineEndedType | Whether last line is terminated with End of Line character\(s\) | Optional |
+| EndOfLineIsSeparator | End Of Line separates records instead of terminating records. \(Deprecated in Version 1.1. Use LastLineEndedType instead\) | False |
+| QuoteChar | Character used to quote a field value \(ie enclose field value\) | " |
+| DelimiterChar | Character which separates fields in a line | , |
+| LineCommentChar | Character which, if it's first in line, denotes that line is a comment | 0x04 | 
+| StuffedEmbeddedQuotes | Quotes can be embedded in a quoted field by having 2 in a row | True |
+| SubstitutionEnabled | Enables substitutions in the text | False |
+| SubstitutionChar | Character which identifies a substitution | \ |
+| AllowEndOfLineCharInQuotes | Allow End of Line character\(s\) within a quoted string | True |
+| IgnoreBlankLines | Ignore blank lines in the text | True |
+| IgnoreExtraChars | Ignore any characters in a line after all fields have been parsed | True |
+| AllowIncompleteRecords | Lines do not need to contain all fields expected by a record | False |
+| HeadingLineCount | Number of heading lines | 0 |
+| MainHeadingLineIndex | Index of Main Heading line | 0 |
+| HeadingConstraint | Default Constraints applied to field headings | None |
+| HeadingQuotedType | Default specification for how field heading values are quoted | Optional |
+| HeadingAlwaysWriteOptionalQuote | Default specifier for whether field heading optional quotes should be written | True |
+| HeadingWritePrefixSpace | Default specifier for whether field headings should be prefixed with a space when written | False |
+| HeadingPadAlignment | Default alignment of padding for fixed width field headings | Auto |
+| HeadingPadCharType | Default method used to pad fixed width field headings | EndOfValue |
+| HeadingPadChar | Default character used to pad fixed width field headings | &lt;space> |
+| HeadingTruncateType | Default method used to truncate fixed width field headings | Right |
+| HeadingTruncateChar | Default character used to fill truncated field headings if HeadingTruncateType = TruncateChar | # |
+| HeadingEndOfValueChar | Default character used to flag End of Field Heading when HeadingPadCharType = EndOfValue | 0x03 |
+
+**Field Sections** which specify the properties of each field of data used within the text file.  In the above example Meta file, the attributes in a &lt;Field> element apply to the respective field and make up a field section.  A Field Section can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| DataType | Field Data Type | String |
+| Index | Explicitly specifies position of field |  |
+| Id | Tag available for User Definition | 0 |
+| Name | Field Name | &lt;Blank> |
+| FixedWidth | Specifies whether field has a fixed number of characters | False |
+| Width | Number of characters in field if FixedWidth = True | 1 |
+| HeadingConstraint | Constraints applied to headings | Main HeadingConstraint |
+| Constant | Field is a constant | False |
+| ValueQuotedType | Specification for how field values are quoted | Optional |
+| ValueAlwaysWriteOptionalQuote | Specifier for whether a value's optional quotes should be written | False |
+| ValueWritePrefixSpace | Specifier for whether values should be prefixed with a space when written | False |
+| ValuePadAlignment | Alignment of padding for fixed width field values | Auto |
+| ValuePadCharType | Method used to pad fixed width field values | EndOfValue |
+| ValuePadChar | Character used to pad fixed width field values | Depends on DataType |
+| ValueTruncateType | Method used to truncate fixed width field values | Exception |
+| ValueTruncateChar | Character used to fill truncated field values if ValueTruncateType = TruncateChar | \# |
+| ValueEndOfValueChar | Character used to flag End of Field Value when ValuePadCharType = EndOfValue | 0x03 |
+| ValueNullChar | Character used to fill truncated field values if ValueTruncateType = NullChar | \* |
+| HeadingQuotedType | Specification for how heading values are quoted | Main HeadingQuotedType |
+| HeadingAlwaysWriteOptionalQuote | Specifier for whether heading optional quotes should be written | Main HeadingAlwaysWriteOptionalQuote |
+| HeadingWritePrefixSpace | Specifier for whether headings should be prefixed with a space when written | Main HeadingWritePrefixSpace |
+| HeadingPadAlignment | Alignment of padding for fixed width field headings | Main HeadingPadAlignment |
+| HeadingPadCharType | Method used to pad fixed width field headings | Main HeadingPadCharType |
+| HeadingPadChar | Character used to pad fixed width field headings | Main HeadingPadChar |
+| HeadingTruncateType | Method used to truncate fixed width field headings | Main HeadingTruncateType |
+| HeadingTruncateChar | Character used to fill truncated field headings if HeadingTruncateType = TruncateChar | Main HeadingTruncateChar |
+| HeadingEndOfValueChar | Character used to flag End of Field Heading when HeadingPadCharType = EndOfValue | Main HeadingEndOfValueChar |
+| Headings | Field Headings as comma text | &lt;Blank> |
+| Null | Specifies whether field value is Null if Constant = True | False |
+| Value | Specifies field value if Constant = True | Depends on DataType |
+| Format | Text format of field value | Depends on DataType |
+| Styles | Either restrict or allow additional formatting when parsing text field values | Depends on DataType |
+| FalseText | Text presentation of Boolean field False value | False |
+| TrueText | Text presentation of Boolean field True value | True |
+
+Fields can have a DataType of: String, Boolean, Integer, Float, Decimal \(similar to Float but better suited for financial calculations\) or DateTime.  Some of the attributes listed above are not applicable to all field DataTypes and some use different values in different DataTypes.
+
+**Substitution Sections** specify which substitutions are used within the text file. Substitutions are similar to Escape Sequences used in some CSV files \(eg \n\).  A Substitution Section can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| Type | The type of substitution | String |
+| Token | A character which determines the substitution to be invoked |  |
+| Value | The string value to replace the substitution character and token \(if Type = String\) |  |
+
+**Sequence Sections**.  A Fielded Text file can have lines with different sets of fields depending on the value of a key field\(s\).  The Sequence Sections in the Meta File specify the sequence of fields which can follow a key field.  A Sequence Section can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| Name | Name of Sequence |  |
+| Root | Specifies whether this is the first sequence invoked for each record \(line\) | False\. |
+| FieldIndices | Shorthand list of fields in this sequence \(Field indices array in commatext string\) | &lt;Blank> |
+
+Each Sequence has a series of &lt;Item> elements which specify the fields included in the sequence.  An &lt;Item> element can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| Index | Explicitly specifies position of Sequence Item in Sequence |  |
+| FieldIndex | Index of field \(in Field List\) used by this Sequence Item |  |
+
+An &lt;Item> element can also contain a series of &lt;Redirect> elements.  The &lt;Redirect> elements determine which sequence should be invoked if a field contains specified values.  A &lt;Redirect> element can contain the following properties/attributes:
+
+| **Attribute** | **Description** | **Default** |
+|:---|:---|:---|
+| Index | Explicitly specifies position of Redirect |  |
+| Type | Specifies type of comparison Redirect makes with Field Value | Depends on DataType of Sequence Item's Field |
+| SequenceName | Name of Sequence to be invoked if the Field's Value matches the Redirect Value |  |
+| InvokationDelay | Specifies whether specified Sequence should be invoked after current field or after current sequence | AfterField |
+| Value | Value against which Field Value is compared | Depends on Redirect Type |

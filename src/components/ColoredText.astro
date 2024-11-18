@@ -1,0 +1,27 @@
+---
+const color2 = Astro.props.color;
+// const color2 = color;
+---
+<pre>
+<code>
+<slot />
+</code>
+</pre>
+
+<style>
+    pre * {
+        /* margin-top: -3em;
+        margin-bottom: -3em;
+        padding-top: -3em;
+        padding-bottom: -3em; */
+        margin-left: 2em;
+        /* background-color: var(--color2); */
+        background-color: orange;
+    }
+    code > * {
+        /* margin-top: -3em;
+        margin-bottom: -3em;
+        padding-top: -3em;
+        padding-bottom: -3em; */
+    }
+</style>

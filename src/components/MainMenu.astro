@@ -1,0 +1,35 @@
+---
+import type { MenuItemDefinition } from '../utils/menu-item-definition';
+import type { MainMenuSettings } from '../utils/nav-bar-settings';
+import BranchMenuItem from './BranchMenuItem.astro';
+
+export interface Props {
+    settings: MainMenuSettings;
+    menuItemDefinitions: readonly MenuItemDefinition[];
+};
+
+const { settings, menuItemDefinitions } = Astro.props;
+---
+
+<menu class="main-menu">
+    {
+        menuItemDefinitions.map((definition) => <BranchMenuItem settings={settings} menuItemDefinition={definition} />)
+    }
+</menu>
+
+<style define:vars={{
+    mainMenuBackgroundColor: settings.mainMenuBackgroundColor,
+    mainMenuMargin: settings.mainMenuMargin,
+    mainMenuPadding: settings.mainMenuPadding,
+    wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
+    narrowMainMenuFlexGap: settings.narrowMainMenuFlexGap,
+    narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
+}}>
+    .main-menu {
+        display: flex;
+        background-color: var(--mainMenuBackgroundColor, inherit);
+        margin: : var(--mainMenuMargin, 0);
+        padding: : var(--mainMenuPadding, 0);
+        gap: var(--wideMainMenuFlexGap, .8rem);
+    }
+</style>

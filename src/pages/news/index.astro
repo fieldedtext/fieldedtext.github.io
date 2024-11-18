@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import NewsCard from '../../components/NewsCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const title = 'News';
+const newsEntries = await getCollection('news');
+const sortedNewsEntries = newsEntries.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+---
+
+<BaseLayout pageTitle={title}>
+    <ul>
+        {
+            sortedNewsEntries.map((entry) => <NewsCard newsEntry={entry} />)
+        }
+    </ul>
+</BaseLayout>

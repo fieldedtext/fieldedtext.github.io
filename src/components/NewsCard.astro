@@ -1,0 +1,21 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+    newsEntry: CollectionEntry<'news'>;
+}
+
+// `post` will match your 'blog' collection schema type
+const { newsEntry } = Astro.props;
+const { Content } = await newsEntry.render();
+---
+<li>
+    <time datetime={newsEntry.data.publishDate.toISOString()}>{newsEntry.data.publishDate.toDateString()}</time>
+    <Content />
+</li>
+
+<style>
+    time {
+        font-weight: bold;
+        font-size: large;
+    }
+</style>

@@ -1,0 +1,43 @@
+---
+import type { MenuItemDefinition } from '../utils/menu-item-definition';
+import type { LeafMenuItemSettings } from '../utils/nav-bar-settings';
+
+export interface Props {
+    settings: LeafMenuItemSettings;
+    menuItemDefinition: MenuItemDefinition;
+};
+
+const { settings, menuItemDefinition } = Astro.props;
+---
+
+{
+    menuItemDefinition.url === undefined ?
+        <span>{menuItemDefinition.text}</span>
+    :
+        <a href={menuItemDefinition.url} class="leaf-menu-item">{menuItemDefinition.text}</a>
+}
+
+
+<style define:vars={{
+    menuItemFontFamily: settings.menuItemFontFamily,
+    menuItemFontSize: settings.menuItemFontSize,
+    menuItemTextDecoration: settings.menuItemTextDecoration,
+    menuItemColor: settings.menuItemColor,
+    menuItemMargin: settings.menuItemMargin,
+    menuItemPadding: settings.menuItemPadding,
+    menuItemHoverBackgroundColor: settings.menuItemHoverBackgroundColor,
+}}>
+    .leaf-menu-item {
+        font-family: var(--menuItemFontFamily, inherit);
+        font-size: var(--menuItemFontSize, 1.2rem);
+        color: var(--menuItemColor, #021426);
+        display: block;
+        text-decoration: var(--menuItemTextDecoration, none);
+        margin: var(--menuItemMargin, 0);
+        padding: var(--menuItemPadding, 0);
+
+        &:hover {
+            background-color: var(--menuItemHoverBackgroundColor, #97c7e7);
+        }
+    }
+</style>
