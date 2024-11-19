@@ -27,7 +27,7 @@ Fielded Text was designed to cover all kinds of text files containing tables of 
 
 ## Can Fielded Text be used now?
 
-Yes. The [Software](../software/) pages contain links to software which implement Fielded Text - including free software.
+Yes. The [Software](../../software/) pages contain links to software which implement Fielded Text - including free software.
 
 ## Can I develop my own software which uses Fielded Text?
 
@@ -41,6 +41,6 @@ Definitely! Just email the Web Admin details about your software
 
 More information can be found at:
 
-* [Introduction](./)
-* [Examples](../software#examples)
+* [Introduction](../../introduction)
+* [Examples](../../software#examples)
 
