@@ -1,9 +1,12 @@
 import { navigate } from 'astro/virtual-modules/transitions-router.js';
+import type { Options } from 'astro/virtual-modules/transitions-types.js';
 
 export class MenuClickProcessor {
     dataClickEventer: MenuClickProcessor.DataClickEventer | undefined;
 
-    private readonly branchMenuItemElements = new Array<Element>();
+    private readonly _hamburgerIcon: Element;
+    private readonly _mainMenuComponent: Element;
+    private readonly _branchMenuItemElements = new Array<Element>();
     private _droppedBranchMenuItemElement: Element | undefined;
 
 
@@ -12,10 +15,15 @@ export class MenuClickProcessor {
         if (hamburgerIcon === null) {
             throw new Error('Hamburger Icon not found');
         } else {
+            this._hamburgerIcon = hamburgerIcon;
             const mainMenuComponent = document.querySelector('.main-menu');
             if (mainMenuComponent === null) {
                 throw new Error('MainMenu Component not found');
             } else {
+                this._mainMenuComponent = mainMenuComponent;
+                hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
+                mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
+
                 hamburgerIcon.addEventListener('click', () => {
                     this.ensureBranchNotDropped();
                     hamburgerIcon.classList.toggle(MenuClickProcessor.hamburgerActiveClassName);
@@ -28,7 +36,9 @@ export class MenuClickProcessor {
                     if (upDownMenuItemClickElement === null) {
                         throw new Error(`UpDownMenuItemClick element for "${element.innerHTML}" not found`);
                     } else {
-                        this.branchMenuItemElements.push(element);
+                        this._branchMenuItemElements.push(element);
+                        element.classList.remove(MenuClickProcessor.branchMenuItemDroppedClassName);
+
                         upDownMenuItemClickElement.addEventListener('click', () => {
 
                             if (this._droppedBranchMenuItemElement === undefined) {
@@ -51,10 +61,6 @@ export class MenuClickProcessor {
                 leafMenuItemElementList.forEach((element) => {
                     if (element instanceof HTMLElement) {
                         element.addEventListener('click', () => {
-                            this.ensureBranchNotDropped();
-                            hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
-                            mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
-
                             const dataset = element.dataset;
                             const data = dataset.data;
                             const url = dataset.url;
@@ -67,13 +73,21 @@ export class MenuClickProcessor {
                             }
 
                             if (!handled && url !== undefined) {
-                                navigate(url);
+                                this.awaitNavigate(url, { history: 'push' } );
                             }
                         });
                     }
                 });
             }
         }
+    }
+
+    private async awaitNavigate(url: string, options: Options) {
+        await navigate(url, options); // I don't think this ever returns.  So following lines are probably superfluous
+        this.ensureBranchNotDropped();
+        this._hamburgerIcon.classList.remove(MenuClickProcessor.hamburgerActiveClassName);
+        this._mainMenuComponent.classList.remove(MenuClickProcessor.mainMenuDisplayedClassName);
+        return;
     }
 
     private ensureBranchNotDropped() {
