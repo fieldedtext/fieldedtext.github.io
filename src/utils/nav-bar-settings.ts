@@ -12,6 +12,7 @@ export interface MainMenuSettings extends BranchMenuItemSettings {
     wideMainMenuFontSize?: string;
     narrowMainMenuFontSize?: string;
     mainMenuBackgroundColor?: string;
+    narrowMainMenuMaxWidth?: string;
     mainMenuMargin?: string;
     mainMenuPadding?: string;
     wideMainMenuFlexGap?: string;
@@ -75,6 +76,7 @@ export namespace LightBlueTones {
         mainMenuFontFamily: 'inherit',
         wideMainMenuFontSize: '1.2rem',
         mainMenuBackgroundColor: 'inherit',
+        narrowMainMenuMaxWidth: '15em',
         mainMenuMargin: '0',
         mainMenuPadding: '0',
         wideMainMenuFlexGap: '0.8em',

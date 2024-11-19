@@ -22,6 +22,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     wideMainMenuFontSize: settings.wideMainMenuFontSize,
     narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
     mainMenuBackgroundColor: settings.mainMenuBackgroundColor,
+    narrowMainMenuMaxWidth: settings.narrowMainMenuMaxWidth,
     mainMenuMargin: settings.mainMenuMargin,
     mainMenuPadding: settings.mainMenuPadding,
     wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
@@ -38,13 +39,15 @@ const { settings, menuItemDefinitions } = Astro.props;
         padding: : var(--mainMenuPadding, 0);
         gap: var(--wideMainMenuFlexGap, .8em);
 
-        @media screen and (width < 32rem) {
+        @media screen and ((hover: none) or (width < 32rem)) {
             position: absolute;
-            top: 100%;
             display: none;
+            top: 100%;
+            right: 0;
             flex-direction: column;
             font-size: var(--narrowMainMenuFontSize, 1.2em);
             gap: var(--narrowMainMenuFlexGap, 0.18rem);
+            max-width: var(--narrowMainMenuMaxWidth, 15em);
             box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
 
             &.displayed {

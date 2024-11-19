@@ -75,7 +75,7 @@ const { settings, menuItemDefinitions } = Astro.props;
         }
 
         /* Make sure lines up with @media in MainMenu and BranchMenuItem */
-        @media screen and (width < 32rem) {
+        @media screen and ((hover: none) or (width < 32rem)) {
             > .narrow-heading-slot {
                 display: flex;
                 align-items: center;

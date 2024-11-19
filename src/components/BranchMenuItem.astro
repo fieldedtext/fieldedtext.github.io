@@ -81,7 +81,7 @@ const { settings, menuItemDefinition } = Astro.props;
     }
 
     /* Make sure lines up with below and @media in NavBar */
-    @media screen and (width >= 32rem) {
+    @media screen and (hover: hover) and (width >= 32rem) {
         .branch-menu-item {
             .up-down-menu-item-click {
                 pointer-events: none;
@@ -107,7 +107,7 @@ const { settings, menuItemDefinition } = Astro.props;
     }
 
     /* Make sure lines up with above and @media in NavBar */
-    @media screen and (width < 32rem) {
+    @media screen and ((hover: none) or (width < 32rem)) {
         .branch-menu-item {
             position: static;
 
