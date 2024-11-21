@@ -10,7 +10,7 @@ const { settings } = Astro.props;
 
 <div class="hamburger"></div>
 
-<style define:vars={{
+<style lang="scss" define:vars={{
     hamburgerWidth: settings.hamburgerWidth,
     hamburgerHeight: settings.hamburgerHeight,
     hamburgerPointer: settings.hamburgerPointer,
@@ -24,6 +24,8 @@ const { settings } = Astro.props;
     hamburgerBottomBackgroundColor: settings.hamburgerBottomBackgroundColor,
     hamburgerBottomTransition: settings.hamburgerBottomTransition,
 }}>
+    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
     .hamburger {
         display: none;
         pointer-events: none;
@@ -64,6 +66,15 @@ const { settings } = Astro.props;
 
         &.active::after {
             transform: rotate(45deg) translate(-0.21em, -0.21em);
+        }
+
+        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+            display: block;
+            pointer-events: all;
+
+            &.active {
+                font-size: var(--narrowMainMenuFontSize, 1.2em);
+            }
         }
     }
 </style>

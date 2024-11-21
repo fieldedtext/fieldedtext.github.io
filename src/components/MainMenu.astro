@@ -17,7 +17,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     }
 </menu>
 
-<style define:vars={{
+<style lang="scss" define:vars={{
     mainMenuFontFamily: settings.mainMenuFontFamily,
     wideMainMenuFontSize: settings.wideMainMenuFontSize,
     narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
@@ -30,16 +30,18 @@ const { settings, menuItemDefinitions } = Astro.props;
     narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
     narrowMenuItemPadding: settings.narrowMenuItemPadding,
 }}>
+    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
     .main-menu {
         display: flex;
         font-family: var(--mainMenuFontFamily, inherit);
         font-size: var(--wideMainMenuFontSize, 1.2em);
         background-color: var(--mainMenuBackgroundColor, inherit);
-        margin: : var(--mainMenuMargin, 0);
-        padding: : var(--mainMenuPadding, 0);
+        margin: var(--mainMenuMargin, 0);
+        padding: var(--mainMenuPadding, 0);
         gap: var(--wideMainMenuFlexGap, .8em);
 
-        @media screen and ((hover: none) or (width < 32rem)) {
+        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
             position: absolute;
             display: none;
             top: 100%;
@@ -53,10 +55,6 @@ const { settings, menuItemDefinitions } = Astro.props;
             &.displayed {
                 display: flex;
                 width: 100%;
-            }
-
-            > .leaf-menu-item {
-                padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
             }
         }
     }

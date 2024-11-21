@@ -36,7 +36,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     <Hamburger settings={settings} />
 </nav>
 
-<style define:vars={{
+<style lang="scss" define:vars={{
     navBarBackgroundColor: settings.navBarBackgroundColor,
     navBarMargin: settings.navBarMargin,
     navBarPadding: settings.navBarPadding,
@@ -44,6 +44,8 @@ const { settings, menuItemDefinitions } = Astro.props;
     navBarWideRightSlotFlex: settings.navBarWideRightSlotFlex,
     narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
 }}>
+    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+
     .navbar {
         width: 100%;
         position: relative;
@@ -74,8 +76,7 @@ const { settings, menuItemDefinitions } = Astro.props;
             flex: var(--navBarWideRightSlotFlex, 0 0 auto);
         }
 
-        /* Make sure lines up with @media in MainMenu and BranchMenuItem */
-        @media screen and ((hover: none) or (width < 32rem)) {
+        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
             > .narrow-heading-slot {
                 display: flex;
                 align-items: center;
@@ -92,15 +93,6 @@ const { settings, menuItemDefinitions } = Astro.props;
 
             > .navbar-wide-right-slot {
                 display: none;
-            }
-
-            > .hamburger {
-                display: block;
-                pointer-events: all;
-
-                &.active {
-                    font-size: var(--narrowMainMenuFontSize, 1.2em);
-                }
             }
         }
     }
