@@ -1,98 +1,113 @@
 ---
 import type { MenuItemDefinition } from '../utils/menu-item-definition';
-import type { NavBarSettings } from '../utils/nav-bar-settings';
+import { LightBlueTones } from '../utils/main-menu-settings';
 import Hamburger from './Hamburger.astro';
 import MainMenu from './MainMenu.astro';
+import { Icon } from 'astro-icon/components';
 
-export interface Props {
-    // class: string;
-    settings: NavBarSettings;
-    menuItemDefinitions: readonly MenuItemDefinition[];
-    // rest?: unknown;
-};
-
-const { settings, menuItemDefinitions } = Astro.props;
-// const { class: className, settings, menuItemDefinitions, ...rest } = Astro.props;
-// <nav class:list={['navbar', className]} {...rest}>
+const menuItemDefinitions: MenuItemDefinition[] = [
+    { text: 'Home', url: '/', title: 'Fielded Text Home page' },
+    {
+        text: 'Introduction',
+        url: '/introduction/',
+        children: [
+            { text: 'Capabilities', url: '/introduction/capabilities/' },
+            { text: 'Structure', url: '/introduction/file-structure/' },
+            { text: 'FAQ', url: '/introduction/faq/' },
+        ],
+    },
+    { text: 'Software', url: '/software/' },
+    { text: 'Standard', url: '/standard/' },
+    { text: 'News', url: '/news/' },
+];
 ---
 
 <nav class="navbar">
-    <div class="navbar-narrow-left-slot">
-        <slot name="narrow-left" />
+    <div class="navbar-narrow-left">
+        <Icon name="noun-comma-separated-value-1512118" />
     </div>
 
-    <div class="navbar-wide-left-slot">
-        <slot name="wide-left" />
+    <div class="navbar-wide-left">
+        <Icon name="noun-comma-separated-value-1512118" />
     </div>
 
-    <MainMenu settings={settings}, menuItemDefinitions={menuItemDefinitions} />
-    <div class="narrow-heading-slot">
+    <MainMenu settings={LightBlueTones.mainMenuSettings}, menuItemDefinitions={menuItemDefinitions} />
+
+    <div class="narrow-heading">
         <slot name="narrow-heading" />
     </div>
 
-    <div class="navbar-wide-right-slot">
-        <slot name="wide-right" />
+    <div class="navbar-wide-right">
+        <div class="navbar-wide-right-icon">
+            <Icon name="noun-comma-separated-value-1512118" />
+        </div>
+        <Hamburger settings={LightBlueTones.hamburgerSettings} />
     </div>
-    <Hamburger settings={settings} />
 </nav>
 
 <style lang="scss" define:vars={{
-    navBarBackgroundColor: settings.navBarBackgroundColor,
-    navBarMargin: settings.navBarMargin,
-    navBarPadding: settings.navBarPadding,
-    navBarWideLeftSlotFlex: settings.navBarWideLeftSlotFlex,
-    navBarWideRightSlotFlex: settings.navBarWideRightSlotFlex,
-    narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
+    wideNavBarBackgroundColor: LightBlueTones.wideMenuBackgroundColor,
+    hamburgerWidth: LightBlueTones.hamburgerSettings.width,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .navbar {
         width: 100%;
-        position: relative;
-        background-color: var(--navBarBackgroundColor, #d0dae0);
-        margin: var(--navBarMargin, 0);
-        padding: var(--navBarPadding, 0);
+        background-color: var(--wideNavBarBackgroundColor, #d0dae0);
+        margin: 0;
+        padding: 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        > .narrow-heading-slot {
+        > .narrow-heading {
             display: none;
         }
 
-        > .navbar-narrow-left-slot {
+        > .navbar-narrow-left {
+            width: var(--hamburgerWidth, 1.8em);
             display: none;
         }
 
-        > .navbar-wide-left-slot {
+        > .navbar-wide-left {
             display: flex;
             align-items: center;
-            flex: var(--navBarWideLeftSlotFlex, 0 0 auto);
+            flex: 0 0 auto;
         }
 
-        > .navbar-wide-right-slot {
+        > .navbar-wide-right {
             display: flex;
             align-items: center;
-            flex: var(--navBarWideRightSlotFlex, 0 0 auto);
+            flex: 0 0 auto;
+        }
+
+        [data-icon="noun-comma-separated-value-1512118"] {
+            color: gray;
+            /* OR */
+            fill: gray;
         }
 
         @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            > .narrow-heading-slot {
+            > .narrow-heading {
                 display: flex;
                 align-items: center;
             }
 
-            > .navbar-narrow-left-slot {
+            > .navbar-narrow-left {
                 display: flex;
                 align-items: center;
             }
 
-            > .navbar-wide-left-slot {
+            > .navbar-wide-left {
                 display: none;
             }
 
-            > .navbar-wide-right-slot {
-                display: none;
+            > .navbar-wide-right {
+                width: var(--hamburgerWidth, 1.8em);
+
+                > .navbar-wide-right-icon {
+                    display: none;
+                }
             }
         }
     }

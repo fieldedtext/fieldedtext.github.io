@@ -1,6 +1,6 @@
 ---
+import type { MainMenuSettings } from '../utils/main-menu-settings';
 import type { MenuItemDefinition } from '../utils/menu-item-definition';
-import type { MainMenuSettings } from '../utils/nav-bar-settings';
 import BranchMenuItem from './BranchMenuItem.astro';
 
 export interface Props {
@@ -21,11 +21,15 @@ const { settings, menuItemDefinitions } = Astro.props;
     mainMenuFontFamily: settings.mainMenuFontFamily,
     wideMainMenuFontSize: settings.wideMainMenuFontSize,
     narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
-    mainMenuBackgroundColor: settings.mainMenuBackgroundColor,
+    mainMenuBackgroundColor: settings.wideMainMenuBackgroundColor,
+    narrowMenuBackgroundColor: settings.narrowMainMenuBackgroundColor,
     narrowMainMenuMaxWidth: settings.narrowMainMenuMaxWidth,
     mainMenuMargin: settings.mainMenuMargin,
     mainMenuPadding: settings.mainMenuPadding,
     wideMainMenuFlexGap: settings.wideMainMenuFlexGap,
+    narrowMainMenuTop: settings.narrowMainMenuTop,
+    narrowMainMenuLeft: settings.narrowMainMenuLeft,
+    narrowMainMenuRight: settings.narrowMainMenuRight,
     narrowMainMenuFlexGap: settings.narrowMainMenuFlexGap,
     narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
     narrowMenuItemPadding: settings.narrowMenuItemPadding,
@@ -36,25 +40,27 @@ const { settings, menuItemDefinitions } = Astro.props;
         display: flex;
         font-family: var(--mainMenuFontFamily, inherit);
         font-size: var(--wideMainMenuFontSize, 1.2em);
-        background-color: var(--mainMenuBackgroundColor, inherit);
+        background-color: var(--wideMainMenuBackgroundColor, inherit);
         margin: var(--mainMenuMargin, 0);
         padding: var(--mainMenuPadding, 0);
         gap: var(--wideMainMenuFlexGap, .8em);
 
         @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
-            position: absolute;
             display: none;
-            top: 100%;
-            right: 0;
-            flex-direction: column;
-            font-size: var(--narrowMainMenuFontSize, 1.2em);
-            gap: var(--narrowMainMenuFlexGap, 0.18rem);
-            max-width: var(--narrowMainMenuMaxWidth, 15em);
-            box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
 
             &.displayed {
                 display: flex;
                 width: 100%;
+                position: absolute;
+                flex-direction: column;
+                background-color: var(--narrowMainMenuBackgroundColor, #cddee8);
+                top: var(--narrowMainMenuTop, 0);
+                left: var(--narrowMainMenuLeft);
+                right: var(--narrowMainMenuRight, 0);
+                font-size: var(--narrowMainMenuFontSize, 1.2em);
+                gap: var(--narrowMainMenuFlexGap, 0.18rem);
+                max-width: var(--narrowMainMenuMaxWidth, 15em);
+                box-shadow: var(--narrowMainMenuBoxShadow, 0 .1rem .4rem black);
             }
         }
     }
