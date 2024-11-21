@@ -53,11 +53,11 @@ const { settings, menuItemDefinition } = Astro.props;
         display: block;
         flex-direction: column;
 
-        .up-down-menu-item {
+        > .up-down-menu-item {
             display: flex;
             align-items: center;
 
-            .up-down-menu-item-click {
+            > .up-down-menu-item-click {
                 display: flex;
                 align-items: center;
 
@@ -83,8 +83,10 @@ const { settings, menuItemDefinition } = Astro.props;
     /* Make sure lines up with below and @media in NavBar */
     @media screen and (hover: hover) and (width >= 32rem) {
         .branch-menu-item {
-            .up-down-menu-item-click {
-                pointer-events: none;
+            > .up-down-menu-item {
+                > .up-down-menu-item-click {
+                    pointer-events: none;
+                }
             }
 
             &:hover,
@@ -93,13 +95,15 @@ const { settings, menuItemDefinition } = Astro.props;
                     display: flex;
                 }
 
-                .up-down-menu-item-click {
-                    > .up-subbed-menu-item-icon {
-                        display: flex;
-                    }
+                > .up-down-menu-item {
+                    > .up-down-menu-item-click {
+                        > .up-subbed-menu-item-icon {
+                            display: flex;
+                        }
 
-                    > .down-subbed-menu-item-icon {
-                        display: none;
+                        > .down-subbed-menu-item-icon {
+                            display: none;
+                        }
                     }
                 }
             }
@@ -111,14 +115,14 @@ const { settings, menuItemDefinition } = Astro.props;
         .branch-menu-item {
             position: static;
 
-            .up-down-menu-item {
+            > .up-down-menu-item {
                 display: flex;
 
                 > .leaf-menu-item {
                     padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
                 }
 
-                .up-down-menu-item-click {
+                > .up-down-menu-item-click {
                     flex: 1 1 auto;
                     padding-left: 0.2em;
                     background-color: var(--upDownMenuItemClickBackgroundColor, #bcc3c8);
@@ -143,13 +147,15 @@ const { settings, menuItemDefinition } = Astro.props;
                     display: flex;
                 }
 
-                .up-down-menu-item-click {
-                    > .up-subbed-menu-item-icon {
-                        display: flex;
-                    }
+                > .up-down-menu-item {
+                    > .up-down-menu-item-click {
+                        > .up-subbed-menu-item-icon {
+                            display: flex;
+                        }
 
-                    > .down-subbed-menu-item-icon {
-                        display: none;
+                        > .down-subbed-menu-item-icon {
+                            display: none;
+                        }
                     }
                 }
             }
