@@ -24,7 +24,7 @@ const { settings } = Astro.props;
     hamburgerBottomBackgroundColor: settings.hamburgerBottomBackgroundColor,
     hamburgerBottomTransition: settings.hamburgerBottomTransition,
 }}>
-    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .hamburger {
         display: none;
@@ -68,7 +68,7 @@ const { settings } = Astro.props;
             transform: rotate(45deg) translate(-0.21em, -0.21em);
         }
 
-        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
             display: block;
             pointer-events: all;
 

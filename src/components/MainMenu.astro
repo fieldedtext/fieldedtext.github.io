@@ -30,7 +30,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     narrowMainMenuBoxShadow: settings.narrowMainMenuBoxShadow,
     narrowMenuItemPadding: settings.narrowMenuItemPadding,
 }}>
-    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .main-menu {
         display: flex;
@@ -41,7 +41,7 @@ const { settings, menuItemDefinitions } = Astro.props;
         padding: var(--mainMenuPadding, 0);
         gap: var(--wideMainMenuFlexGap, .8em);
 
-        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
             position: absolute;
             display: none;
             top: 100%;

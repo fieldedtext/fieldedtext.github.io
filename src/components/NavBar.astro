@@ -44,7 +44,7 @@ const { settings, menuItemDefinitions } = Astro.props;
     navBarWideRightSlotFlex: settings.navBarWideRightSlotFlex,
     narrowMainMenuFontSize: settings.narrowMainMenuFontSize,
 }}>
-    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .navbar {
         width: 100%;
@@ -76,7 +76,7 @@ const { settings, menuItemDefinitions } = Astro.props;
             flex: var(--navBarWideRightSlotFlex, 0 0 auto);
         }
 
-        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
             > .narrow-heading-slot {
                 display: flex;
                 align-items: center;

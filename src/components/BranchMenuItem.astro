@@ -28,7 +28,7 @@ const { settings, menuItemDefinition } = Astro.props;
                 (menuItemDefinition.children !== undefined && menuItemDefinition.children.length > 0) &&
                     <menu class="sub-menu">
                         { menuItemDefinition.children.map((childDefinition) =>
-                            childDefinition.url !== undefined && <LeafMenuItem settings={settings} menuItemDefinition={childDefinition} />
+                            childDefinition.url !== undefined && <LeafMenuItem class="leaf-menu-item" settings={settings} menuItemDefinition={childDefinition} />
                         )}
                     </menu>
             }
@@ -48,7 +48,7 @@ const { settings, menuItemDefinition } = Astro.props;
     narrowSubMenuMenuItemPadding: settings.narrowSubMenuMenuItemPadding,
     narrowSubMenuBackgroundColor: settings.narrowSubMenuBackgroundColor,
 }}>
-    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .branch-menu-item {
         position: relative;
@@ -83,7 +83,7 @@ const { settings, menuItemDefinition } = Astro.props;
     }
 
     /* Make sure lines up with below and @media in NavBar */
-    @media screen and (hover: hover) and (width >= main-menu.$narrow-breakpoint) {
+    @media screen and (hover: hover) and (width >= main-menu-config.$narrow-breakpoint) {
         .branch-menu-item {
             > .up-down-menu-item {
                 > .up-down-menu-item-click {
@@ -113,7 +113,7 @@ const { settings, menuItemDefinition } = Astro.props;
     }
 
     /* Make sure lines up with above and @media in NavBar */
-    @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+    @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
         .branch-menu-item {
             position: static;
 

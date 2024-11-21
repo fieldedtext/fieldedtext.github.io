@@ -31,7 +31,7 @@ const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
     menuItemPadding: settings.menuItemPadding,
     menuItemHoverBackgroundColor: settings.menuItemHoverBackgroundColor,
 }}>
-    @use '/main-menu'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
+    @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
     .leaf-menu-item {
         color: var(--menuItemColor, #021426);
@@ -45,7 +45,7 @@ const { class: className, settings, menuItemDefinition, ...rest } = Astro.props;
             background-color: var(--menuItemHoverBackgroundColor, #97c7e7);
         }
 
-        @media screen and ((hover: none) or (width < main-menu.$narrow-breakpoint)) {
+        @media screen and ((hover: none) or (width < main-menu-config.$narrow-breakpoint)) {
             padding: var(--narrowMenuItemPadding, 0 0.2rem 0 0.7rem);
         }
     }
