@@ -41,6 +41,6 @@ Definitely! Just email the Web Admin details about your software
 
 More information can be found at:
 
-* [Introduction](../../introduction)
-* [Examples](../../software#examples)
+* [Introduction](../../introduction/)
+* [Examples](../../software/#examples)
 

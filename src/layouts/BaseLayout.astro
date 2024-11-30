@@ -1,7 +1,6 @@
 ---
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-// import '../styles/global.css';
 
 export interface Props {
     pageTitle: string;
@@ -15,7 +14,7 @@ const narrowHeading = 'Fielded Text';
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{pageTitle}</title>
     </head>
@@ -24,7 +23,7 @@ const narrowHeading = 'Fielded Text';
             <span class="narrow-heading" slot="narrow-heading">{narrowHeading}</span>
         </Header>
 
-        <div id="titleAndBody">
+        <div id="titleAndContent">
             <h1>{pageTitle}</h1>
             <slot />
         </div>
@@ -80,14 +79,15 @@ const narrowHeading = 'Fielded Text';
     }
 
     body {
-        margin: 0;
+        margin: 0 auto;
+        padding: 0;
         font-size: calc(15px + 0.390625vw);
     }
 
-    #titleAndBody {
-        margin: 0 auto;
+    #titleAndContent {
         width: 100%;
         max-width: 80ch;
+        margin: 0 auto;
         padding: 0 1rem;
         line-height: 1.5;
 

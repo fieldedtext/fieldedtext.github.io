@@ -1,8 +1,5 @@
 ---
-import type { MenuItemDefinition } from '../utils/menu-item-definition';
-import { LightBlueTones } from '../utils/main-menu-settings';
-import Hamburger from './Hamburger.astro';
-import MainMenu from './MainMenu.astro';
+import { type MenuItemDefinition, Hamburger, MainMenu, DefaultSettings } from '@pbkware/astro-main-menu';
 import { Icon } from 'astro-icon/components';
 
 const menuItemDefinitions: MenuItemDefinition[] = [
@@ -31,7 +28,7 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         <Icon name="noun-comma-separated-value-1512118" />
     </div>
 
-    <MainMenu settings={LightBlueTones.mainMenuSettings}, menuItemDefinitions={menuItemDefinitions} />
+    <MainMenu settings={DefaultSettings.mainMenuSettings}, menuItemDefinitions={menuItemDefinitions} />
 
     <div class="narrow-heading">
         <slot name="narrow-heading" />
@@ -41,13 +38,13 @@ const menuItemDefinitions: MenuItemDefinition[] = [
         <div class="navbar-wide-right-icon">
             <Icon name="noun-comma-separated-value-1512118" />
         </div>
-        <Hamburger settings={LightBlueTones.hamburgerSettings} />
+        <Hamburger settings={DefaultSettings.hamburgerSettings} />
     </div>
 </nav>
 
 <style lang="scss" define:vars={{
-    wideNavBarBackgroundColor: LightBlueTones.wideMenuBackgroundColor,
-    hamburgerWidth: LightBlueTones.hamburgerSettings.width,
+    wideNavBarBackgroundColor: DefaultSettings.wideMenuBackgroundColor,
+    hamburgerWidth: DefaultSettings.hamburgerSettings.width,
 }}>
     @use '/src/styles/scss/main-menu-config'; // Sass is only used to to allow media breakpoint to be specified by a variable.  Otherwise rest of style is plain CSS.
 
@@ -114,5 +111,24 @@ const menuItemDefinitions: MenuItemDefinition[] = [
 </style>
 
 <script>
-    import '../scripts/menu-click-processor';
+    import { MenuClickProcessor } from '@pbkware/astro-main-menu';
+    const processor = MenuClickProcessor.get(); // This always needs to be called however only need processor if want to handle dataClick event
+
+    // Handle dataClick event.
+    processor.dataClickEventer = (_element, id, data) => {
+        if (id === 'alert') {
+            setTimeout(() => alert(data), 0);
+            return true; // Indicate event was handled.
+        } else {
+            return false; // Indicate event not handled.  processor will then try and navigate to URL
+        }
+    }
+
+    // Hide narrow menu and hamburger if document is clicked outside menu
+    document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target === null || !processor.isClickHandledEventTarget(target)) {
+            processor.deactivateNarrow();
+        }
+    });
 </script>
