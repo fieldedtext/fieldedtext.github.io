@@ -91,16 +91,17 @@ const narrowHeading = 'Fielded Text';
         padding: 0 1rem;
         line-height: 1.5;
 
-            /* Table */
-        table,
-        th,
-        td {
-            border: 1px solid darkslategrey;
+        /* Table */
+        table {
+            display: block;
+            overflow-x: auto;
             border-collapse: collapse;
-        }
 
-        th, td {
-            padding: .3em;
+            th,
+            td {
+                border: 1px solid darkslategrey;
+                padding: .3em;
+            }
         }
     }
 
