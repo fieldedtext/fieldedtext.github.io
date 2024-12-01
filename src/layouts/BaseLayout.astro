@@ -6,6 +6,9 @@ export interface Props {
     pageTitle: string;
 };
 
+const canonicalSite = 'https://fieldedtext.org/';
+const canonicalURl = new URL(Astro.url.pathname, canonicalSite);
+
 const { pageTitle } = Astro.props;
 const narrowHeading = 'Fielded Text';
 ---
@@ -14,6 +17,7 @@ const narrowHeading = 'Fielded Text';
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="canonical" href={canonicalURl} />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
         <title>{pageTitle}</title>
