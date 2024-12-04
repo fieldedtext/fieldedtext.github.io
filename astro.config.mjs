@@ -4,14 +4,27 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import icon from "astro-icon";
 
+const canonicalHost = 'fieldedtext.org';
+
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
     site: 'https://fieldedtext.github.io',
     trailingSlash: 'always',
 
-    integrations: [
-        mdx(),
-        icon(),
+    integrations: [mdx(), icon(),
+        sitemap({
+            // Change sitemap URLs to use custom host supplied to GitHub.
+            serialize(item) {
+                const url = new URL(item.url);
+                if (url.host === 'fieldedtext.github.io') {
+                    url.host = canonicalHost;
+                }
+                item.url = url.href;
+                return item;
+            }
+        })
     ],
 
     redirects: {
