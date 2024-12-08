@@ -37,6 +37,8 @@ export default defineConfig({
         '/Standard.html': '/standard/',
         '/Standard/PreviousReleases.html': '/standard/previous/',
         '/Standard/FTStd0.9.odt': '/standard/FTStd0.9.docx',
+        '/standard/ftref0.6.pdf': '/standard/',
+        '/Standard/FTRef0.6.pdf': '/standard/',
         '/Licence.html': '/',
         '/Contact.html': '/',
     },
