@@ -1,2 +1,2 @@
-export const iconAssetsFolderPath = '/src/assets/icon/'
-export const standardAssetsFolderPath = '/src/assets/standard/'
+export const iconAssetsFolderPath = '/src/assets/icon/';
+export const standardAssetsFolderPath = '/src/assets/standard/';

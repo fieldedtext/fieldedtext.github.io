@@ -8,9 +8,7 @@ const sortedNewsEntries = newsEntries.sort((a, b) => b.data.publishDate.valueOf(
 ---
 
 <BaseLayout pageTitle={title}>
-    <ul>
-        {
-            sortedNewsEntries.map((entry) => <NewsCard newsEntry={entry} />)
-        }
-    </ul>
+  <ul>
+    {sortedNewsEntries.map((entry) => <NewsCard newsEntry={entry} />)}
+  </ul>
 </BaseLayout>

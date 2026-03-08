@@ -1,6 +1,6 @@
 # Fielded Text Website
 
-*Developed with Astro*
+_Developed with Astro_
 
 [https://fieldedtext.org](https://fieldedtext.org)
 or
@@ -8,17 +8,17 @@ or
 
 Change Log
 
-* 5 December 2024\
-Added Sitemap
+- 5 December 2024\
+  Added Sitemap
 
-* 2 December 2024\
-Added Canonical tag to head
+- 2 December 2024\
+  Added Canonical tag to head
 
-* 30 November 2024\
-Fixed table overflow
+- 30 November 2024\
+  Fixed table overflow
 
-* 29 November 2024\
-Deployed to GitHub
+- 29 November 2024\
+  Deployed to GitHub
 
-* 18 November 2024\
-Ported to Astro
+- 18 November 2024\
+  Ported to Astro

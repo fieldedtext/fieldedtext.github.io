@@ -15,11 +15,11 @@ Yes. But it covers a lot more than just CSV files.
 
 Briefly, the main advantages are:
 
-* Easier and more reliable to generate and parse
-* Improves ability to exchange and transfer
-* Better ability to publish
-* Can use database techniques
-* Can develop better editors
+- Easier and more reliable to generate and parse
+- Improves ability to exchange and transfer
+- Better ability to publish
+- Can use database techniques
+- Can develop better editors
 
 ## What if my file is not in a CSV format?
 
@@ -41,6 +41,5 @@ Definitely! Just email the Web Admin details about your software
 
 More information can be found at:
 
-* [Introduction](../../introduction/)
-* [Examples](../../software/#examples)
-
+- [Introduction](../../introduction/)
+- [Examples](../../software/#examples)
