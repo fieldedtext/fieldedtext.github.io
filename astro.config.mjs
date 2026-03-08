@@ -38,20 +38,7 @@ export default defineConfig({
         '/Standard/PreviousReleases.html': '/standard/previous/',
         '/Standard/FTStd0.9.odt': '/standard/FTStd0.9.docx',
         '/standard/ftref0.6.pdf': '/standard/',
-        '/Standard/FTRef0.6.pdf': '/standard/',
         '/Licence.html': '/',
         '/Contact.html': '/',
     },
-
-    // Set the vite scss api property below if the following warning is displayed:
-    // Deprecation Warning: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
-    vite: {
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: 'modern-compiler' // or "modern"
-                }
-            }
-        }
-    }
 });
