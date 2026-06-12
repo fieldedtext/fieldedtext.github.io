@@ -1,7 +1,9 @@
-import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+import { defineCollection } from 'astro:content';
 
 const newsCollection = defineCollection({
-  type: 'content', // v2.5.0 and later
+  loader: glob({ pattern: '**/_*.{md,mdx}', base: './src/data/news' }),
   schema: z.object({
     publishDate: z.date(),
   }),
